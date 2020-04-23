@@ -10,28 +10,30 @@ export default (app: Application): any => {
       allowNull: false,
       primaryKey: true
     },
-    email: {
-      type: DataTypes.STRING
-    },
-    password: {
-      type: DataTypes.STRING
-    },
-    mobile: {
-      type: DataTypes.STRING
-    },
-    auth0Id: { type: DataTypes.STRING },
-    googleId: { type: DataTypes.STRING },
-    facebookId: { type: DataTypes.STRING },
-    twitterId: { type: DataTypes.STRING },
-    githubId: { type: DataTypes.STRING },
-    isVerified: { type: DataTypes.BOOLEAN },
-    verifyToken: { type: DataTypes.STRING },
-    verifyShortToken: { type: DataTypes.STRING },
-    verifyExpires: { type: DataTypes.DATE },
-    verifyChanges: { type: DataTypes.JSON },
-    resetToken: { type: DataTypes.STRING },
-    resetExpires: { type: DataTypes.DATE },
-    created: { type: DataTypes.DATE }
+    // email: {
+    //   type: DataTypes.STRING
+    // },
+    // password: {
+    //   type: DataTypes.STRING
+    // },
+    // mobile: {
+    //   type: DataTypes.STRING
+    // },
+
+    // auth0Id: { type: DataTypes.STRING },
+    // googleId: { type: DataTypes.STRING },
+    // facebookId: { type: DataTypes.STRING },
+    // twitterId: { type: DataTypes.STRING },
+    // githubId: { type: DataTypes.STRING },
+
+    // isVerified: { type: DataTypes.BOOLEAN },
+    // verifyToken: { type: DataTypes.STRING },
+    // verifyShortToken: { type: DataTypes.STRING },
+    // verifyExpires: { type: DataTypes.DATE },
+    // verifyChanges: { type: DataTypes.JSON },
+    // resetToken: { type: DataTypes.STRING },
+    // resetExpires: { type: DataTypes.DATE },
+    // created: { type: DataTypes.DATE }
   }, {
     hooks: {
       beforeCount (options: any) {
@@ -50,7 +52,8 @@ export default (app: Application): any => {
     (user as any).belongsToMany(models.user, { as: 'user', through: models.user_relationship });
     (user as any).belongsToMany(models.user, { as: 'relatedUser', through: models.user_relationship });
     (user as any).belongsToMany(models.organization, { through: models.organization_user }); // user can join multiple orgs
-    (user as any).belongsToMany(models.organization_user_rank, { through: models.organization_user }) // user can join multiple orgs
+    (user as any).belongsToMany(models.organization_user_rank, { through: models.organization_user }); // user can join multiple orgs
+    (user as any).hasMany(models.identity_provider)
   }
 
   return user

@@ -26,6 +26,7 @@ import UserRelationship from './user-relationship/user-relationship.service'
 import User from './user/user.service'
 import Role from './user-role/user-role.service'
 import AccessControl from './access-control/access-control.service'
+import identityProvider from './identity-provider/identity-provider.service'
 
 // Junctions
 import GroupUser from './group-user/group-user.service'
@@ -84,4 +85,5 @@ export default (app: Application): void => {
   app.configure(AccessControlScope)
   app.configure(organizationUserRank)
   app.configure(organizationUser)
+  app.configure(identityProvider)
 }
