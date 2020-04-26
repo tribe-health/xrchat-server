@@ -17,6 +17,18 @@ export default (app: Application): any => {
       type: DataTypes.STRING
     },
     
+    accountType: {
+      type: DataTypes.ENUM(
+        'email',
+        'sms',
+        'password',
+        'github',
+        'google',
+        'facebook',
+        'auth0'
+      ),
+      allowNull: false
+    },
 
     isVerified: { type: DataTypes.BOOLEAN },
     verifyToken: { type: DataTypes.STRING },
@@ -33,8 +45,12 @@ export default (app: Application): any => {
     },
     indexes: [
       {
-        fields: ['userId']
-      }
+        fields: ['userId'],
+      },
+      {
+        unique: true,
+        fields: ['userId', 'token']
+      },
     ]
   });
 
