@@ -9,7 +9,7 @@ export default (app: Application): any => {
       defaultValue: DataTypes.UUIDV1,
       allowNull: false,
       primaryKey: true
-    },
+    }
     // email: {
     //   type: DataTypes.STRING
     // },
