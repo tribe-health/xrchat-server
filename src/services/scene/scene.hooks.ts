@@ -1,10 +1,16 @@
 import getScene from '../../hooks/get-scene'
+import * as commonHooks from "feathers-hooks-common";
 
 // Don't remove this comment. It's needed to format import lines nicely.
 
 export default {
   before: {
-    all: [],
+    all: [
+      commonHooks.iff(
+          process.env.SERVER_MODE === 'media' || process.env.SERVER_MODE === 'realtime',
+          commonHooks.disallow('external')
+      )
+    ],
     find: [],
     get: [],
     create: [],

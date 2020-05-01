@@ -8,6 +8,7 @@ import attachOwnerIdInSavingContact from '../../hooks/set-loggedin-user-in-body'
 import addUriToFile from '../../hooks/add-uri-to-file'
 import reformatUploadResult from '../../hooks/reformat-upload-result'
 import makeS3FilesPublic from '../../hooks/make-s3-files-public'
+import * as commonHooks from "feathers-hooks-common";
 
 // Don't remove this comment. It's needed to format import lines nicely.
 
@@ -47,7 +48,12 @@ const createOwnedFile = (options = {}) => {
 
 export default {
   before: {
-    all: [],
+    all: [
+      commonHooks.iff(
+          process.env.SERVER_MODE !== 'media',
+          commonHooks.disallow('external')
+      )
+    ],
     find: [disallow()],
     get: [disallow()],
     create: [authenticate('jwt'), attachOwnerIdInSavingContact('account_id'), addUriToFile(), makeS3FilesPublic()],

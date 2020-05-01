@@ -2,10 +2,16 @@ import { HookContext } from '@feathersjs/feathers'
 import dauria from 'dauria'
 import removeRelatedResources from '../../hooks/remove-related-resources'
 import addAssociations from '../../hooks/add-associations'
+import * as commonHooks from "feathers-hooks-common";
 
 export default {
   before: {
-    all: [],
+    all: [
+      commonHooks.iff(
+          process.env.SERVER_MODE === 'media' || process.env.SERVER_MODE === 'realtime',
+          commonHooks.disallow('external')
+      )
+    ],
     find: [addAssociations({
       models: [
         {

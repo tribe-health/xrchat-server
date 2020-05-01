@@ -6,6 +6,8 @@ import compress from 'compression'
 import helmet from 'helmet'
 import cors from 'cors'
 import swagger from 'feathers-swagger'
+// @ts-ignore
+import sync from 'feathers-sync';
 
 import feathers from '@feathersjs/feathers'
 import configuration from '@feathersjs/configuration'
@@ -60,6 +62,11 @@ app.use('/', express.static(app.get('public')))
 // Set up Plugins and providers
 app.configure(express.rest())
 app.configure(socketio())
+
+// Set up feathers-sync
+app.configure(sync({
+    uri: 'redis://localhost:6379'
+}))
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware)

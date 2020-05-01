@@ -1,6 +1,13 @@
+import * as commonHooks from "feathers-hooks-common";
+
 export default {
   before: {
-    all: [],
+    all: [
+      commonHooks.iff(
+          process.env.SERVER_MODE !== 'media',
+          commonHooks.disallow('external')
+      )
+    ],
     find: [],
     get: [],
     create: [],

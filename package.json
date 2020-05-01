@@ -91,6 +91,7 @@
     "feathers-seeder": "^2.0.0",
     "feathers-sequelize": "^6.1.0",
     "feathers-swagger": "^1.2.1",
+    "feathers-sync": "^2.1.0",
     "fs-blob-store": "^5.2.1",
     "graphql": "^14.4.2",
     "graphql-relay": "^0.6.0",

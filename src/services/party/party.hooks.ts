@@ -1,5 +1,6 @@
 import * as authentication from '@feathersjs/authentication'
 import { disallow } from 'feathers-hooks-common'
+import * as commonHooks from "feathers-hooks-common";
 
 // import attachOwnerIdInSavingContact from '../../hooks/set-loggedin-user-in-body'
 
@@ -9,7 +10,12 @@ const { authenticate } = authentication.hooks
 
 export default {
   before: {
-    all: [authenticate('jwt')],
+    all: [
+      commonHooks.iff(
+        process.env.SERVER_MODE === 'media' || process.env.SERVER_MODE === 'realtime',
+        commonHooks.disallow('external')
+      ),
+      authenticate('jwt')],
     find: [],
     get: [],
     create: [],

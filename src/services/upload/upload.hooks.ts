@@ -10,10 +10,16 @@ import addUriToFile from '../../hooks/add-uri-to-file'
 import reformatUploadResult from '../../hooks/reformat-upload-result'
 import makeS3FilesPublic from '../../hooks/make-s3-files-public'
 import uploadThumbnail from '../../hooks/upload-thumbnail'
+import * as commonHooks from "feathers-hooks-common";
 
 export default {
   before: {
-    all: [],
+    all: [
+      commonHooks.iff(
+          process.env.SERVER_MODE !== 'media',
+          commonHooks.disallow('external')
+      )
+    ],
     find: [disallow()],
     get: [disallow()],
     create: [addUUID(), addUploadPath(), addUriToFile(), makeS3FilesPublic()],

@@ -2,6 +2,7 @@ import * as authentication from '@feathersjs/authentication'
 import { HookContext } from '@feathersjs/feathers'
 import { disallow } from 'feathers-hooks-common'
 import { BadRequest } from '@feathersjs/errors'
+import * as commonHooks from "feathers-hooks-common";
 
 // Don't remove this comment. It's needed to format import lines nicely.
 
@@ -30,6 +31,10 @@ const validateGroupId = () => {
 export default {
   before: {
     all: [
+      commonHooks.iff(
+        process.env.SERVER_MODE === 'media' || process.env.SERVER_MODE === 'realtime',
+        commonHooks.disallow('external')
+      ),
       authenticate('jwt'),
       validateGroupId()
     ],

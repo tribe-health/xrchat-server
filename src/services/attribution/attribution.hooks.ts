@@ -1,8 +1,15 @@
 // Don't remove this comment. It's needed to format import lines nicely.
 
+import * as commonHooks from "feathers-hooks-common";
+
 export default {
   before: {
-    all: [],
+    all: [
+      commonHooks.iff(
+        process.env.SERVER_MODE === 'media' || process.env.SERVER_MODE === 'realtime',
+        commonHooks.disallow('external')
+      )
+    ],
     find: [],
     get: [],
     create: [],

@@ -3,6 +3,7 @@ import { disallow } from 'feathers-hooks-common'
 import { HookContext } from '@feathersjs/feathers'
 import attachOwnerIdInSavingContact from '../../hooks/set-loggedin-user-in-body'
 import setResponseStatusCode from '../../hooks/set-response-status-code'
+import * as commonHooks from "feathers-hooks-common";
 
 // Don't remove this comment. It's needed to format import lines nicely.
 
@@ -29,7 +30,12 @@ const mapProjectIdToQuery = () => {
 }
 export default {
   before: {
-    all: [authenticate('jwt')],
+    all: [
+      commonHooks.iff(
+          process.env.SERVER_MODE === 'media' || process.env.SERVER_MODE === 'realtime',
+          commonHooks.disallow('external')
+      ),
+      authenticate('jwt')],
     find: [disallow()],
     get: [disallow()],
     create: [
