@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize'
 import { Application } from '../declarations'
+import generateShortId from '../util/generate-short-id'
 
 export default function (app: Application): any {
   const sequelizeClient: Sequelize = app.get('sequelizeClient')
@@ -12,7 +13,9 @@ export default function (app: Application): any {
     },
     asset_sid: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true,
+      defaultValue: () => generateShortId(8)
     },
     name: {
       type: DataTypes.STRING,

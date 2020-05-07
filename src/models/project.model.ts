@@ -2,6 +2,7 @@
 // for more of what you can do here.
 import { Sequelize, DataTypes } from 'sequelize'
 import { Application } from '../declarations'
+import generateShortId from '../util/generate-short-id'
 
 export default (app: Application): any => {
   const sequelizeClient: Sequelize = app.get('sequelizeClient')
@@ -14,7 +15,8 @@ export default (app: Application): any => {
     },
     project_sid: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV1,
+      unique: true,
+      defaultValue: () => generateShortId(8),
       allowNull: false
     },
     name: {
