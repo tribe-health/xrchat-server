@@ -1,4 +1,6 @@
+import { Params } from '@feathersjs/feathers'
 import { Application } from '../../declarations'
+import config from 'config'
 
 export const getLink = (type: string, hash: string): string =>
   (process.env.APP_HOST ?? '') + 'magicLink' + `?type=${type}&token=${hash}`
@@ -21,3 +23,11 @@ export const sendSms = (app: Application, sms: any): Promise<void> =>
   ).catch((err: any) =>
     console.log('Error sending SMS', err)
   )
+
+/**
+ * This method will extract the loggedIn User from params
+ * @param params
+ */
+export const extractLoggedInUserFromParams = (params: Params): any => {
+  return params[config.get('authentication.entity')]
+}
